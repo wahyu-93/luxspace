@@ -15,4 +15,14 @@ class FrontController extends Controller
     {
         return view('pages.frontend.detail');
     }
+
+    public function cart()
+    {
+        return view('pages.frontend.cart');
+    }
+
+    public function success()
+    {
+        return view('pages.frontend.success');
+    }
 }
