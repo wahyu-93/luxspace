@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class TransaksiItem extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
+
+    public function product()
+    {
+        return $this->hasOne(Product::class);
+    }
 }
