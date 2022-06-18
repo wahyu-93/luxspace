@@ -14,10 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [FrontController::class, 'index'])->name('index');
-Route::get('/details/{slug}', [FrontController::class, 'detail'])->name('details');
-Route::get('/cart', [FrontController::class, 'cart'])->name('cart');\
-Route::get('/checkout/succes', [FrontController::class, 'success'])->name('checkout-success');
+Route::middleware('admin')->group(function(){
+    Route::get('/', [FrontController::class, 'index'])->name('index');
+    Route::get('/details/{slug}', [FrontController::class, 'detail'])->name('details');
+    Route::get('/cart', [FrontController::class, 'cart'])->name('cart');\
+    Route::get('/checkout/succes', [FrontController::class, 'success'])->name('checkout-success');
+});
+
 
 Route::middleware([
     'auth:sanctum',
