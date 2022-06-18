@@ -10,4 +10,9 @@ class FrontController extends Controller
     {
         return view('pages.frontend.index');
     }
+
+    public function detail($slug)
+    {
+        return view('pages.frontend.detail');
+    }
 }
