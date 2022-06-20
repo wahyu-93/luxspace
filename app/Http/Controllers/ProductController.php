@@ -25,7 +25,6 @@ class ProductController extends Controller
                 ->make();
         }
 
-
         return view('pages.dashboard.product.index');
     }
 
@@ -36,7 +35,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.dashboard.product.create');
     }
 
     /**
