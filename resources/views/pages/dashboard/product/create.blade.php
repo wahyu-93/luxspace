@@ -48,7 +48,7 @@
                 <div class="flex flex-wrap mb-4 -mx-3">
                     <div class="w-full px-3">
                         <label for="price" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Price</label>
-                        <input type="number" price="price" value="{{ old('price') }}" placeholder="Product price" 
+                        <input type="number" name="price" value="{{ old('price') }}" placeholder="Product price" 
                             class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                     </div>
                 </div>
