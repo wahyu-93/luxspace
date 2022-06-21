@@ -21,9 +21,25 @@ class ProductController extends Controller
         if(request()->ajax()){
             $query = Product::query();
             return DataTables::of($query)
+                ->editcolumn('aksi', function($item){
+                    return '
+                        <a href="'.route('dashboard.product.edit', $item->id).'" class="bg-gray-500 text-white px-3 py-1 rounded m-2">
+                            Edit
+                        </a>
+
+                        <form method="post" action="'. route('dashboard.product.destroy', $item->id) .'" class="inline-block">
+                            '.csrf_field().' 
+                            '.method_field('delete').'
+                            
+                            <button type="submit" class="bg-red-500 text-white rounded px-3 py-1 m-2">Delete</button>
+
+                        </form>
+                    ';
+                })
                 ->editcolumn('price', function($item){
                     return number_format($item->price);
                 })    
+                ->rawColumns(['aksi'])
                 ->make();
         }
 
@@ -73,9 +89,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        //
+        return view('pages.dashboard.product.edit', compact('product'));
     }
 
     /**
@@ -85,9 +101,14 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, Product $product)
     {
-        //
+        $data = $request->all();
+        $data['slug'] = Str::slug($request->name);
+        
+        $product->update($data);
+
+        return redirect()->route('dashboard.product.index');
     }
 
     /**
@@ -96,8 +117,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return redirect()->route('dashboard.product.index');
     }
 }
