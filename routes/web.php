@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,5 +38,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'),'verified'])
 
     Route::middleware(['admin'])->group(function(){
         Route::resource('product', ProductController::class);
+
+        Route::resource('product.galery', GalleryController::class)->shallow()->except(['edit', 'update', 'delete']);
     });
 });

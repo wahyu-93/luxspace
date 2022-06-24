@@ -23,6 +23,10 @@ class ProductController extends Controller
             return DataTables::of($query)
                 ->editcolumn('aksi', function($item){
                     return '
+                        <a href="'.route('dashboard.product.galery.index', $item->id).'" class="bg-blue-500 text-white px-3 py-1 rounded mr-3">
+                            Gallery
+                        </a>
+
                         <a href="'.route('dashboard.product.edit', $item->id).'" class="bg-gray-500 text-white px-3 py-1 rounded mr-3">
                             Edit
                         </a>
