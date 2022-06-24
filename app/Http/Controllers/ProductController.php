@@ -23,7 +23,7 @@ class ProductController extends Controller
             return DataTables::of($query)
                 ->editcolumn('aksi', function($item){
                     return '
-                        <a href="'.route('dashboard.product.edit', $item->id).'" class="bg-gray-500 text-white px-3 py-1 rounded m-2">
+                        <a href="'.route('dashboard.product.edit', $item->id).'" class="bg-gray-500 text-white px-3 py-1 rounded mr-3">
                             Edit
                         </a>
 
@@ -31,7 +31,7 @@ class ProductController extends Controller
                             '.csrf_field().' 
                             '.method_field('delete').'
                             
-                            <button type="submit" class="bg-red-500 text-white rounded px-3 py-1 m-2">Delete</button>
+                            <button type="submit" class="bg-red-500 text-white rounded px-3 py-1 mr-3">Delete</button>
 
                         </form>
                     ';
@@ -103,6 +103,7 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
+        
         $data = $request->all();
         $data['slug'] = Str::slug($request->name);
         

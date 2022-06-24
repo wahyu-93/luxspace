@@ -26,10 +26,17 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name'          => 'required|max:255',
+        $rules = [
+            'name'          => 'required|max:255|unique:products',
             'description'   => 'required',
             'price'         => 'required|integer'
         ];
+
+        if($this->method() != 'POST'){
+            $rules['name'] = 'required|max:255|unique:products,name,' . $this->route('product')->id;
+        };
+
+        return $rules;
+        
     }
 }
