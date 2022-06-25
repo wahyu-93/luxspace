@@ -89,6 +89,6 @@ class GalleryController extends Controller
     public function destroy(Galery $galery)
     {
         $galery->delete();
-        return redirect()->route('dashboard.product.index');
+        return redirect()->route('dashboard.product.galery.index', $galery->product_id);
     }
 }
