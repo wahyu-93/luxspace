@@ -12,16 +12,19 @@
                 ajax: {
                     url: '{!! url()->current() !!}'
                 },
+                columnDefs: [
+                    { className: 'text-center', targets: [2,3] },
+                ],
                 columns:[
                     {data: 'id', name: 'id', width: '5%'},
                     {data: 'url', name: 'url'},
-                    {data: 'is_featured', name: 'is_featured', width: '15%'},
+                    {data: 'is_featured', name: 'is_featured'},
                     {
                         data: 'aksi',
                         name: 'aksi',
                         searchable: false,
                         orderable: false,
-                        width: '5%'
+                        width: '25%'
                     }
                 ]
             })
@@ -32,7 +35,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="mb-5">
                 <a href="{{ route('dashboard.product.galery.create', $product->id) }}" 
-                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow-lg">
+                class="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow-lg">
                     + Upload Photos
                 </a>    
             </div>

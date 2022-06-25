@@ -39,6 +39,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'),'verified'])
     Route::middleware(['admin'])->group(function(){
         Route::resource('product', ProductController::class);
 
-        Route::resource('product.galery', GalleryController::class)->shallow()->except(['edit', 'update', 'delete']);
+        Route::resource('product.galery', GalleryController::class)->shallow()->except(['edit', 'update', 'show']);
     });
 });

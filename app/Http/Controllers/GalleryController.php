@@ -6,6 +6,7 @@ use App\Http\Requests\galeryRequest;
 use App\Models\Galery;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class GalleryController extends Controller
@@ -19,11 +20,11 @@ class GalleryController extends Controller
     {
         // jalankkan jika requestnya ajak
         if(request()->ajax()){
-            $query = Galery::query();
+            $query = Galery::where('product_id', $product->id)->get();
             return DataTables::of($query)
                 ->editcolumn('aksi', function($item){
                     return '
-                        <form method="post" action="'. route('dashboard.product.destroy', $item->id) .'" class="inline-block">
+                        <form method="post" action="'. route('dashboard.galery.destroy', $item->id) .'" class="inline-block">
                             '.csrf_field().' 
                             '.method_field('delete').'
                             
@@ -33,12 +34,12 @@ class GalleryController extends Controller
                     ';
                 })
                 ->editcolumn('url', function($item){
-                    return 'Foto';
+                    return '<img src="'.Storage::url($item->url).'" style="max-width: 450px;"></img>';
                 })
                 ->editcolumn('is_featured', function($item){
                     return $item->is_featured ? 'Yes' : 'No';
                 })
-                ->rawColumns(['aksi'])
+                ->rawColumns(['aksi', 'url'])
                 ->make();
         }
 
@@ -63,7 +64,20 @@ class GalleryController extends Controller
      */
     public function store(galeryRequest $request, Product $product)
     {
+        $files = $request->file('files');
+        
+        if($request->hasFile('files')){
+            foreach($files as $file){
+                $path = $file->store('public/gallery/' .$product->id);
+                
+                Galery::create([
+                    'product_id'   => $product->id,
+                    'url'   => $path
+                ]);
+            };
+        };
 
+        return redirect()->route('dashboard.product.galery.index', compact('product'));
     }
 
     /**
@@ -72,8 +86,9 @@ class GalleryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Galery $galery)
     {
-        //
+        $galery->delete();
+        return redirect()->route('dashboard.product.index');
     }
 }
