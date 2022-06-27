@@ -12,6 +12,9 @@
                 ajax: {
                     url: '{!! url()->current() !!}'
                 },
+                columnDefs: [
+                    { className: 'text-center', targets: [0, 2,3,4,5,6] }
+                ],
                 columns:[
                     {data: 'id', name: 'id', width: '5%'},
                     {data: 'name', name: 'name'},

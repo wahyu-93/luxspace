@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Product &raquo; {{ $product->name }} &raquo; Edit
+            Transaction &raquo; {{ $transaction->name }} &raquo; Edit
         </h2>
     </x-slot>
 
@@ -27,37 +27,30 @@
             {{-- end alert --}}
 
             {{-- form --}}
-            <form action="{{ route('dashboard.product.update', $product->id) }}" method="post" enctype="multipart/form-data" class="w-full">
+            <form action="{{ route('dashboard.transaction.update', $transaction->id) }}" method="post" enctype="multipart/form-data" class="w-full">
                 @csrf
                 @method('PUT')
                 
                 <div class="flex flex-wrap mb-4 -mx-3">
                     <div class="w-full px-3">
-                        <label for="name" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Nama</label>
-                        <input type="text" name="name" value="{{ old('name') ?? $product->name  }}" placeholder="Product Name" 
-                            class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                        <label for="status" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Status</label>
+                        <select name="status" id="status" class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                            <option value="{{ $transaction->status }}">{{ $transaction->status }}</option>
+                            <option disabled>-------------</option>
+                            <option value="PENDING">PENDING</option>
+                            <option value="SUCCESS">SUCCESS</option>
+                            <option value="CHALLENGE">CHALLENGE</option>
+                            <option value="FAILED">FAILED</option>
+                            <option value="SHIPPING">SHIPPING</option>
+                            <option value="SHIPPED">SHIPPED</option>
+                        </select>
                     </div>
                 </div>
 
-                <div class="flex flex-wrap mb-4 -mx-3">
-                    <div class="w-full px-3">
-                        <label for="description" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Description</label>
-                        <textarea type="text" name="description" placeholder="description product" 
-                            class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">{{ old('description') ?? $product->description }}</textarea>
-                    </div>
-                </div>
 
                 <div class="flex flex-wrap mb-4 -mx-3">
                     <div class="w-full px-3">
-                        <label for="price" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Price</label>
-                        <input type="number" name="price" value="{{ old('price') ?? $product->price}}" placeholder="Product price" 
-                            class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                    </div>
-                </div>
-
-                <div class="flex flex-wrap mb-4 -mx-3">
-                    <div class="w-full px-3">
-                        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white px-4 py-2 shadow-lg rounded">Update Product</button>
+                        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white px-4 py-2 shadow-lg rounded">Update Transaction</button>
                     </div>
                 </div>
 
