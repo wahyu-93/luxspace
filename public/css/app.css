@@ -1225,14 +1225,14 @@ select {
 .-mt-px {
   margin-top: -1px;
 }
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
 .mt-16 {
   margin-top: 4rem;
 }
 .mb-8 {
   margin-bottom: 2rem;
-}
-.mb-10 {
-  margin-bottom: 2.5rem;
 }
 .block {
   display: block;
