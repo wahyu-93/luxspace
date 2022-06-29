@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FrontController extends Controller
 {
@@ -22,9 +24,32 @@ class FrontController extends Controller
         return view('pages.frontend.detail', compact('product', 'recomendations'));
     }
 
+    public function cartAdd(Request $request, $id)
+    {
+        Cart::create([
+            'user_id'    => Auth::user()->id,
+            'product_id' => $id
+        ]);
+
+        return redirect()->route('cart');
+    }
+
+    public function cartDelete($id)
+    {
+        $item = Cart::findOrFail($id);
+
+        $item->delete();
+
+        return redirect()->route('cart');
+    }
+
     public function cart()
     {
-        return view('pages.frontend.cart');
+        // nested relasi cart berelsai dengan product tapi kita perlu galeri juga maka kita bisa nested relas
+        // cart::with(['product.galeries])
+        $carts = Cart::with(['product.galeries'])->where('user_id', Auth::user()->id)->get();
+
+        return view('pages.frontend.cart', compact('carts'));
     }
 
     public function success()

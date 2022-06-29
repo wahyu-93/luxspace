@@ -6,7 +6,7 @@
     <div class="container mx-auto">
         <ul class="breadcrumb">
             <li>
-                <a href="index.html">Home</a>
+                <a href="{{ route('index') }}">Home</a>
             </li>
 
             <li>
@@ -54,136 +54,57 @@
                     </div>
                 </div>
 
-                <p id="cart-empty" class="hidden text-center py-8">
-                    Ooops... Cart is empty
-                    <a href="details.html" class="underline">Shop Now</a>
-                </p>
+                @forelse ($carts as $cart)
+                    <div class="flex flex-start flex-wrap items-center mb-4 -mx-4" data-row="1">
+                        <div class="px-4 flex-none">
+                            <div class="" style="width: 90px; height: 90px">
+                                <img
+                                    src="{{ $cart->product->galeries()->exists() ? Storage::url($cart->product->galeries->first()->url) : "data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" }}"
+                                    alt="chair-1"
+                                    class="object-cover rounded-xl w-full h-full"
+                                />
+                            </div>
+                        </div>
+                    
+                        <div class="px-4 w-auto flex-1 md:w-5/12">
+                            <div class="">
+                            <h6 class="font-semibold text-lg md:text-xl leading-8">
+                                {{ $cart->product->name }}
+                            </h6>
+                            <span class="text-sm md:text-lg">Office Room</span>
+                            <h6
+                                class="font-semibold text-base md:text-lg block md:hidden"
+                            >
+                                IDR {{ number_format($cart->product->price) }}
+                            </h6>
+                            </div>
+                        </div>
 
-                <!-- START: ROW 1 -->
-                <div class="flex flex-start flex-wrap items-center mb-4 -mx-4" data-row="1">
-                    <div class="px-4 flex-none">
-                        <div class="" style="width: 90px; height: 90px">
-                            <img
-                                src="{{ asset('/frontend/images/content/chair-1.png') }}"
-                                alt="chair-1"
-                                class="object-cover rounded-xl w-full h-full"
-                            />
+                        <div class="px-4 w-auto flex-none md:flex-1 md:w-5/12 hidden md:block">
+                            <div class="">
+                                <h6 class="font-semibold text-lg">IDR {{ number_format($cart->product->price) }}</h6>
+                            </div>
                         </div>
-                    </div>
-                
-                    <div class="px-4 w-auto flex-1 md:w-5/12">
-                        <div class="">
-                        <h6 class="font-semibold text-lg md:text-xl leading-8">
-                            Saman Kakka
-                        </h6>
-                        <span class="text-sm md:text-lg">Office Room</span>
-                        <h6
-                            class="font-semibold text-base md:text-lg block md:hidden"
-                        >
-                            IDR 28.000.000
-                        </h6>
-                        </div>
-                    </div>
 
-                    <div class="px-4 w-auto flex-none md:flex-1 md:w-5/12 hidden md:block">
-                        <div class="">
-                            <h6 class="font-semibold text-lg">IDR 28.000.000</h6>
+                        <div class="px-4 w-2/12">
+                            <div class="text-center">
+                                <form action="{{ route('cart-delete', $cart->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="text-red-600 border-none focus:outline-none px-3 py-1">
+                                        X
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
+                @empty
+                    <p id="cart-empty" class="text-center py-8">
+                        Ooops... Cart is empty
+                        <a href="{{ route('index') }}" class="underline">Shop Now</a>
+                    </p>
+                @endforelse
 
-                    <div class="px-4 w-2/12">
-                        <div class="text-center">
-                            <button data-delete-item="1" class="text-red-600 border-none focus:outline-none px-3 py-1">
-                                X
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- END: ROW 1 -->
-
-                <!-- START: ROW 2 -->
-                <div class="flex flex-start flex-wrap items-center mb-4 -mx-4" data-row="1">
-                    <div class="px-4 flex-none">
-                        <div class="" style="width: 90px; height: 90px">
-                            <img
-                                src="{{ asset('/frontend/images/content/chair-2.png') }}"
-                                alt="chair-1"
-                                class="object-cover rounded-xl w-full h-full"
-                            />
-                        </div>
-                    </div>
-                
-                    <div class="px-4 w-auto flex-1 md:w-5/12">
-                        <div class="">
-                        <h6 class="font-semibold text-lg md:text-xl leading-8">
-                            Green Seat
-                        </h6>
-                        <span class="text-sm md:text-lg">Office Room</span>
-                        <h6
-                            class="font-semibold text-base md:text-lg block md:hidden"
-                        >
-                            IDR 12.500.000
-                        </h6>
-                        </div>
-                    </div>
-
-                    <div class="px-4 w-auto flex-none md:flex-1 md:w-5/12 hidden md:block">
-                        <div class="">
-                            <h6 class="font-semibold text-lg">IDR 12.500.000</h6>
-                        </div>
-                    </div>
-
-                    <div class="px-4 w-2/12">
-                        <div class="text-center">
-                            <button data-delete-item="1" class="text-red-600 border-none focus:outline-none px-3 py-1">
-                                X
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- END: ROW 2 -->
-
-                <!-- START: ROW 3 -->
-                <div class="flex flex-start flex-wrap items-center mb-4 -mx-4" data-row="1">
-                    <div class="px-4 flex-none">
-                        <div class="" style="width: 90px; height: 90px">
-                            <img
-                                src="{{ asset('/frontend/images/content/chair-3.png') }}"
-                                alt="chair-1"
-                                class="object-cover rounded-xl w-full h-full"
-                            />
-                        </div>
-                    </div>
-                
-                    <div class="px-4 w-auto flex-1 md:w-5/12">
-                        <div class="">
-                        <h6 class="font-semibold text-lg md:text-xl leading-8">
-                            Pasific
-                        </h6>
-                        <span class="text-sm md:text-lg">Office Room</span>
-                        <h6
-                            class="font-semibold text-base md:text-lg block md:hidden"
-                        >
-                            IDR 88.800.000
-                        </h6>
-                        </div>
-                    </div>
-
-                    <div class="px-4 w-auto flex-none md:flex-1 md:w-5/12 hidden md:block">
-                        <div class="">
-                            <h6 class="font-semibold text-lg">IDR 88.800.000</h6>
-                        </div>
-                    </div>
-
-                    <div class="px-4 w-2/12">
-                        <div class="text-center">
-                            <button data-delete-item="1" class="text-red-600 border-none focus:outline-none px-3 py-1">
-                                X
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- END: ROW 3 -->
             </div>
 
             <div class="w-full md:px-4 md:w-4/12" id="shipping-detail">
