@@ -16,7 +16,10 @@ class FrontController extends Controller
 
     public function detail($slug)
     {
-        return view('pages.frontend.detail');
+        $product = Product::with(['galeries'])->where('slug', $slug)->firstOrFail();
+        $recomendations = Product::with(['galeries'])->inRandomOrder()->limit(4)->get();
+
+        return view('pages.frontend.detail', compact('product', 'recomendations'));
     }
 
     public function cart()
