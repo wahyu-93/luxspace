@@ -26,6 +26,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'),'verified'])
     Route::get('/cart', [FrontController::class, 'cart'])->name('cart');
     Route::post('/cart/{id}', [FrontController::class, 'cartAdd'])->name('cart-add');
     Route::delete('/cart/{id}', [FrontController::class, 'cartDelete'])->name('cart-delete');
+    Route::post('checkout', [FrontController::class, 'checkout'])->name('checkout');
     Route::get('/checkout/succes', [FrontController::class, 'success'])->name('checkout-success');
 });
 
