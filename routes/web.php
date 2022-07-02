@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\MyTransactionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
@@ -37,6 +38,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'),'verified'])
         Route::resource('product', ProductController::class);
         Route::resource('product.galery', GalleryController::class)->shallow()->except(['edit', 'update', 'show']);
         Route::resource('transaction', TransactionController::class)->except(['create', 'destroy', 'store']);
+        Route::resource('my-transaction', MyTransactionController::class)->only(['index', 'show']);
         Route::resource('user', UserController::class)->only(['index', 'edit', 'update', 'destroy']);
     });
 });
